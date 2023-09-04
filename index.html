@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <title>rock paper scissors</title>
+  </head>
+  <body>
+    <script>
+      /* Returns the computer choice */
+      function getComputerChoice() {
+        const choices = ['Rock', 'Paper', 'Scissors'];
+        return choices[Math.floor(Math.random() * 3)];
+      }
+      /* Plays a round between 2 players */
+      function playRound(playerSelection, computerSelection) {
+        /*  make the parameters all lowercase
+            compare 2 parameters using P > R, R > S, S > P
+            cases:
+            if pS == cS
+                print tie
+            if pS == P
+                case cS == R
+                    print "P > R" Win
+                case cS == S
+                    print "S > P" Lose */
+        const player = playerSelection.toLowerCase();
+        const computer = computerSelection.toLowerCase();
+        if (player === computer) {
+          return 'Tie';
+        }
+        if (player === 'rock') {
+          switch (computer) {
+            case 'scissors': {
+              return 'You win! Rock beats Scissors';
+              break;
+            }
+            case 'paper': {
+              return 'You lose. Paper beats Rock';
+              break;
+            }
+          }
+        }
+        if (player === 'paper') {
+          switch (computer) {
+            case 'scissors': {
+              return 'You lose. Scissors beats Paper';
+              break;
+            }
+            case 'rock': {
+              return 'You win! Paper beats Rock';
+              break;
+            }
+          }
+        }
+        if (player === 'scissors') {
+          switch (computer) {
+            case 'rock': {
+              return 'You lose. Rock beats Scissors';
+              break;
+            }
+            case 'paper': {
+              return 'You win! Scissors beats Paper';
+              break;
+            }
+          }
+        } else {
+          return 'not a valid choice';
+        }
+      }
+
+      function game(rounds) {
+        for (let i = 0; i < parseInt(rounds); i++) {
+          const playerChoice = prompt('Rock, paper or scissors?');
+          const computarChoice = getComputerChoice();
+          console.log(playRound(playerChoice, computarChoice));
+        }
+      }
+
+      game(1);
+    </script>
+  </body>
+</html>
