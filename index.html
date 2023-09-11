@@ -8,7 +8,15 @@
     <title>rock paper scissors</title>
   </head>
   <body>
+    <button id="rock">ROCK</button>
+    <button id="paper">PAPER</button>
+    <button id="scissors">SCISSORS</button>
+    <div class="points"></div>
+    <div class="display"></div>
     <script>
+      let countPlayer = 0;
+      let countComputer = 0;
+
       /* Returns the computer choice */
       function getComputerChoice() {
         const choices = ['Rock', 'Paper', 'Scissors'];
@@ -16,29 +24,19 @@
       }
       /* Plays a round between 2 players */
       function playRound(playerSelection, computerSelection) {
-        /*  make the parameters all lowercase
-            compare 2 parameters using P > R, R > S, S > P
-            cases:
-            if pS == cS
-                print tie
-            if pS == P
-                case cS == R
-                    print "P > R" Win
-                case cS == S
-                    print "S > P" Lose */
         const player = playerSelection.toLowerCase();
         const computer = computerSelection.toLowerCase();
         if (player === computer) {
-          return 'Tie';
+          return;
         }
         if (player === 'rock') {
           switch (computer) {
             case 'scissors': {
-              return 'You win! Rock beats Scissors';
+              countPlayer++;
               break;
             }
             case 'paper': {
-              return 'You lose. Paper beats Rock';
+              countComputer++;
               break;
             }
           }
@@ -46,11 +44,11 @@
         if (player === 'paper') {
           switch (computer) {
             case 'scissors': {
-              return 'You lose. Scissors beats Paper';
+              countComputer++;
               break;
             }
             case 'rock': {
-              return 'You win! Paper beats Rock';
+              countPlayer++;
               break;
             }
           }
@@ -58,28 +56,52 @@
         if (player === 'scissors') {
           switch (computer) {
             case 'rock': {
-              return 'You lose. Rock beats Scissors';
+              countComputer++;
               break;
             }
             case 'paper': {
-              return 'You win! Scissors beats Paper';
+              countPlayer++;
               break;
             }
           }
-        } else {
-          return 'not a valid choice';
         }
       }
 
-      function game(rounds) {
-        for (let i = 0; i < parseInt(rounds); i++) {
-          const playerChoice = prompt('Rock, paper or scissors?');
-          const computarChoice = getComputerChoice();
-          console.log(playRound(playerChoice, computarChoice));
+      function winner() {
+        if (countPlayer === 5) {
+          countPlayer = 0;
+          countComputer = 0;
+          return 'The winner is Player';
+        } else if (countComputer === 5) {
+          countPlayer = 0;
+          countComputer = 0;
+          return 'The winner is Computer';
         }
       }
 
-      game(1);
+      const points = document.querySelector('.points');
+      const display = document.querySelector('.display');
+
+      const btnRock = document.querySelector('#rock');
+      btnRock.addEventListener('click', () => {
+        playRound('Rock', getComputerChoice());
+        points.textContent = `Player: ${countPlayer} Computer: ${countComputer}`;
+        display.textContent = winner();
+      });
+
+      const btnPaper = document.querySelector('#paper');
+      btnPaper.addEventListener('click', () => {
+        playRound('Paper', getComputerChoice());
+        points.textContent = `Player: ${countPlayer} Computer: ${countComputer}`;
+        display.textContent = winner();
+      });
+
+      const btnScissors = document.querySelector('#scissors');
+      btnScissors.addEventListener('click', () => {
+        playRound('Scissors', getComputerChoice());
+        points.textContent = `Player: ${countPlayer} Computer: ${countComputer}`;
+        display.textContent = winner();
+      });
     </script>
   </body>
 </html>
